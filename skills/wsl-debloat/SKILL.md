@@ -1,7 +1,6 @@
 ---
 name: wsl-debloat
 description: Free disk space on WSL by clearing package manager caches (npm, pip, pnpm, playwright, node-gyp, puppeteer, prisma) and optionally pruning Docker build cache, images, and volumes on a remote VPS. Also reports lab node_modules. Triggers on "free disk space", "clean up caches", "WSL disk full", "debloat", "clear npm cache", "clean caches", "disk is getting low".
-license: MIT
 compatibility: Designed for Claude Code on WSL. VPS pruning requires SSH access configured as "vps" alias or VPS_SSH_HOST env var. Reads VPS_SSH_HOST from ~/.secrets/master.env if present.
 allowed-tools: Bash Read
 ---

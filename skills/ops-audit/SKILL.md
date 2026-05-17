@@ -1,7 +1,6 @@
 ---
 name: ops-audit
 description: Full eagle-eye ops audit across both WSL and a remote VPS simultaneously. Use when the user wants a complete picture of everything — what's running locally and in production, what's live vs local-only, cross-environment dependency map. Triggers on phrases like "full audit", "audit everything", "ops audit", "what do I have running", "overview of my stack", "eagle eye view", or "show me everything".
-license: MIT
 compatibility: Designed for Claude Code on WSL. Requires both wsl-audit and vps-audit skills installed at ~/.claude/commands/. Requires SSH access configured as "vps" alias in ~/.ssh/config.
 allowed-tools: Bash Read
 ---

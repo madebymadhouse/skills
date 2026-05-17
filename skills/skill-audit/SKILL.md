@@ -1,7 +1,6 @@
 ---
 name: skill-audit
 description: Audit all skills in ~/.claude/commands/ for quality, structure, and efficiency. Finds deterministic steps that should be extracted into scripts, AI interpretation of things that are actually fixed operations, duplicated logic across skills, missing folder structure, weak descriptions, and composability opportunities. Use when the user says "audit my skills", "review my skills", "improve my skills", "check skill quality", or wants to make skills more efficient or composable.
-license: MIT
 compatibility: Designed for Claude Code. Skills must be installed at ~/.claude/commands/ using the folder-based structure with SKILL.md files.
 allowed-tools: Bash Read Edit
 ---

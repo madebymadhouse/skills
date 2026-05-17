@@ -1,7 +1,6 @@
 ---
 name: vps-audit
 description: Deep audit of a remote VPS running Docker, Coolify, and Traefik. Use when the user wants to check what containers are running, inspect Coolify services, review Traefik routes, check disk/memory, review firewall rules, or get an eagle-eye view of their production server. Triggers on phrases like "audit the vps", "what's running on the server", "check production", "how's the vps doing", "what containers are up", or "check coolify".
-license: MIT
 compatibility: Designed for Claude Code on WSL. Requires an SSH alias named "vps" in ~/.ssh/config pointing to a server running Docker, Coolify, and Traefik. See scripts/collect-vps.sh to customize the SSH target.
 allowed-tools: Bash Read
 ---

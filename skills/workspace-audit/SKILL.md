@@ -1,7 +1,6 @@
 ---
 name: workspace-audit
 description: Audit all git repos under ~/dev for dirty state, unpushed commits, exposed .env files, and tracked context files (CLAUDE.md, AGENTS.md, GEMINI.md). Use when the user wants to know if their workspace is clean, before a deploy, or when something feels off. Triggers on "audit workspace", "check repos", "anything unpushed", "is my workspace clean", "check for dirty repos", "any exposed secrets".
-license: MIT
 compatibility: Designed for Claude Code on WSL. Requires git, find, and repos under ~/dev.
 allowed-tools: Bash Read
 ---

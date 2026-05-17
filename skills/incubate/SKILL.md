@@ -2,7 +2,6 @@
 name: incubate
 description: Mad House project lifecycle manager. Create, list, stage, promote, ship, and archive projects in ~/dev/mad-house/lab. Every project has a stage (concept → prototype → building → shipped → maintained → archived) and a type (code, game, creative, tool, experiment, content, bot). Use when managing lab projects, moving a project between stages, promoting from lab to a GitHub org, marking something as shipped, or archiving a project.
 argument-hint: <command> [args] — e.g. "new my-idea --type experiment --desc '...'" or "list" or "stage my-idea prototype" or "ship my-idea"
-license: MIT
 compatibility: Designed for Claude Code at Mad House. Requires ~/dev/mad-house/lab/ directory, Python 3, and the gh CLI for GitHub operations (promote command).
 allowed-tools: Bash Read
 ---

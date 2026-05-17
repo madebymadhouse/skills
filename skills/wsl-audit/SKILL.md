@@ -1,7 +1,6 @@
 ---
 name: wsl-audit
 description: Deep audit of a WSL environment. Use when the user wants to understand what's running on their local machine, see the dev workspace, check runtimes, AI tooling, shell config, SSH keys, Docker state, or get an eagle-eye view of WSL. Triggers on phrases like "audit wsl", "what's on my machine", "check my local setup", "what projects do I have", or "show me my dev workspace".
-license: MIT
 compatibility: Designed for Claude Code on WSL (Windows Subsystem for Linux). Requires bash, find, and standard GNU tools.
 allowed-tools: Bash Read
 ---

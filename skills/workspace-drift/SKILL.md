@@ -1,7 +1,6 @@
 ---
 name: workspace-drift
 description: Automated drift detection across all repos and live services. Checks git repos for uncommitted changes and unpushed commits, pings service URLs for health, verifies VPS SSH connectivity, checks Coolify API status, and scans key npm projects for outdated packages. Outputs a machine-readable JSON summary and human-readable status. Triggers on "check for drift", "is everything healthy", "workspace drift", "check services", "are my services up", "what's drifted".
-license: MIT
 compatibility: Designed for Claude Code on WSL. Configure via ~/.secrets/master.env — set VPS_SSH_HOST, COOLIFY_API_URL, COOLIFY_API_TOKEN, DASHBOARD_URL, and any service URLs to check. VPS SSH requires a configured alias or host.
 allowed-tools: Bash Read
 ---

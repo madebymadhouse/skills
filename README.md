@@ -96,4 +96,4 @@ This means Claude never wastes time re-running commands or guessing at output. I
 
 ---
 
-Built with love at [Mad House](https://github.com/madebymadhouse). MIT licensed.
+Built with love at [Mad House](https://github.com/madebymadhouse).

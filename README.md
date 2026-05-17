@@ -45,32 +45,14 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 
 ## Installing a skill
 
-Paste one of these into Claude and it will handle the rest.
+Paste either of these into Claude and it will handle the rest.
 
-**Install everything:**
 ```
 Install all skills from github.com/madebymadhouse/skills into my Claude Code setup
 ```
 
-**Install just one** (swap in any skill name from the table above):
 ```
-Install the wsl-audit skill from github.com/madebymadhouse/skills
-```
-
-```
-Install the workspace-audit skill from github.com/madebymadhouse/skills
-```
-
-```
-Install the wsl-debloat skill from github.com/madebymadhouse/skills
-```
-
-```
-Install the vps-audit skill from github.com/madebymadhouse/skills
-```
-
-```
-Install the incubate skill from github.com/madebymadhouse/skills
+Install the [skill-name] skill from github.com/madebymadhouse/skills into my Claude Code setup
 ```
 
 ---

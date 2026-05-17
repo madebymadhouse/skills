@@ -1,0 +1,27 @@
+{
+  "name": "madhouse-skills",
+  "owner": {
+    "name": "Mad House",
+    "email": "goot27@proton.me"
+  },
+  "metadata": {
+    "description": "Mad House ops skills for WSL + KVM VPS infrastructure",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ops-skills",
+      "description": "Infrastructure ops skills for auditing and managing a WSL dev machine + KVM VPS running Coolify and Docker. Includes WSL audit, VPS audit, combined ops audit, environment drift detection, skill quality audit, and clean uninstall tooling.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/wsl-audit",
+        "./skills/vps-audit",
+        "./skills/ops-audit",
+        "./skills/env-sync",
+        "./skills/skill-audit",
+        "./skills/uninstall"
+      ]
+    }
+  ]
+}

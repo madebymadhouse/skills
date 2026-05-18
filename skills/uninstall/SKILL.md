@@ -2,8 +2,7 @@
 name: uninstall
 description: Cleanly uninstall a CLI tool or package from WSL — finds every trace across npm, pip, cargo, config dirs, caches, VS Code extensions, and home files, then removes what the user confirms. Use when the user wants to fully remove a tool, package, or CLI from the WSL environment. Triggers on "uninstall", "remove", "get rid of", "clean up" followed by a tool name.
 argument-hint: <tool-name>
-compatibility: Designed for Claude Code on WSL (Windows Subsystem for Linux). Requires bash, find, and whichever package managers are relevant (npm, pip, pipx, cargo).
-allowed-tools: Bash Read
+disable_model_invocation: true
 ---
 
 # Uninstall

@@ -1,8 +1,10 @@
 ---
 name: workspace-sync
 description: Fast-forward pull all clean git repos under ~/dev. Skips dirty repos and repos with no remote. Safe to run at the start of any session to get all repos up to date. Triggers on "sync repos", "pull all repos", "update all repos", "get latest", "sync my workspace", "pull everything".
+license: MIT
 compatibility: Designed for Claude Code on WSL. Requires git and repos under ~/dev with remotes configured.
 allowed-tools: Bash Read
+disable_model_invocation: true
 ---
 
 # Workspace Sync

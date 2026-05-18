@@ -5,6 +5,7 @@ description: Verify that AGENTS.md files are accurate by checking every path the
   repos not mentioned in AGENTS.md. Triggers on "is agents.md accurate", "check agents.md",
   "sync agents.md", "verify agents.md", "agents.md drift", "update agents.md".
 allowed-tools: Bash, Read, Edit
+disable_model_invocation: true
 ---
 
 # agents-md-sync
@@ -29,7 +30,7 @@ Reads AGENTS.md files, extracts all path references, checks each against the fil
 ## Workflow
 
 1. Run `TARGET_DIR="$HOME" bash scripts/check.sh` for the root AGENTS.md
-2. Run for each project subdirectory that has its own AGENTS.md
+2. Run for `~/dev/mad-house/` and `~/dev/orinadus/` if they exist
 3. For each stale path: propose the fix (remove the line, update the path, or note the drift)
 4. Apply fixes only after confirming with the user
 

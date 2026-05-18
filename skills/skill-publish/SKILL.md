@@ -4,6 +4,7 @@ description: Package a locally built skill and publish it to the madebymadhouse/
 argument-hint: <skill-name>
 compatibility: Designed for Claude Code at Mad House. Requires ~/dev/mad-house/skills/ to be cloned and up to date.
 allowed-tools: Bash Read Edit
+disable_model_invocation: true
 ---
 
 # Skill Publish

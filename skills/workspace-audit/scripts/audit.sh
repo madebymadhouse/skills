@@ -5,37 +5,28 @@ TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 DEV_ROOT="$HOME/dev"
 ISSUES=0
 CLEAN=0
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "===== WORKSPACE AUDIT — $TIMESTAMP ====="
 echo
 
-# --- Git repo checks ---
+# --- Git repo checks (via shared git-scan.sh) ---
 echo "[ GIT REPOS ]"
-while IFS= read -r -d '' repo; do
-  dir=$(dirname "$repo")
-  name=${dir#"$HOME/"}
-  cd "$dir" || continue
+
+GIT_JSON=$("$SCRIPT_DIR/git-scan.sh" --fetch --untracked 2>/dev/null)
+
+while IFS= read -r repo_json; do
+  name=$(echo "$repo_json" | python3 -c "import sys,json; r=json.loads(sys.stdin.read()); print(r['name'])")
+  dirty=$(echo "$repo_json" | python3 -c "import sys,json; r=json.loads(sys.stdin.read()); print(r['dirty'])")
+  untracked=$(echo "$repo_json" | python3 -c "import sys,json; r=json.loads(sys.stdin.read()); print(r['untracked'])")
+  ahead=$(echo "$repo_json" | python3 -c "import sys,json; r=json.loads(sys.stdin.read()); print(r['ahead'])")
+  has_remote=$(echo "$repo_json" | python3 -c "import sys,json; r=json.loads(sys.stdin.read()); print(r['has_remote'])")
 
   flags=""
-
-  # Dirty working tree
-  if ! git diff --quiet 2>/dev/null || ! git diff --cached --quiet 2>/dev/null; then
-    flags="$flags [DIRTY]"
-  fi
-  # Untracked files
-  if [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
-    flags="$flags [UNTRACKED]"
-  fi
-  # No remote
-  if ! git remote get-url origin &>/dev/null; then
-    flags="$flags [NO-REMOTE]"
-  else
-    git fetch --quiet 2>/dev/null
-    ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null || echo 0)
-    if [[ "$ahead" -gt 0 ]]; then
-      flags="$flags [AHEAD:$ahead]"
-    fi
-  fi
+  [[ "$dirty" -gt 0 ]]     && flags="$flags [DIRTY]"
+  [[ "$untracked" -gt 0 ]] && flags="$flags [UNTRACKED]"
+  [[ "$has_remote" == "False" ]] && flags="$flags [NO-REMOTE]"
+  [[ "$ahead" -gt 0 ]]     && flags="$flags [AHEAD:$ahead]"
 
   if [[ -n "$flags" ]]; then
     echo "  NEEDS ATTENTION: $name$flags"
@@ -43,7 +34,12 @@ while IFS= read -r -d '' repo; do
   else
     CLEAN=$((CLEAN + 1))
   fi
-done < <(find "$DEV_ROOT" -name ".git" -maxdepth 4 -print0)
+done < <(echo "$GIT_JSON" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+for r in data['repos']:
+    print(json.dumps(r))
+")
 
 echo
 
@@ -54,7 +50,6 @@ while IFS= read -r -d '' envfile; do
   dir=$(dirname "$envfile")
   gitroot=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null)
   if [[ -z "$gitroot" ]]; then continue; fi
-  rel=${envfile#"$gitroot/"}
   if ! git -C "$gitroot" check-ignore -q "$envfile" 2>/dev/null; then
     echo "  EXPOSED: $envfile"
     ISSUES=$((ISSUES + 1))

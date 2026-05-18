@@ -5,6 +5,7 @@ description: Find repos nested inside lab/, core/, prod/, or tooling/ and move t
   removing old locations. Triggers on "flatten workspace", "fix repo paths", "move
   repos to flat", "repos in wrong place", "clean up workspace structure".
 allowed-tools: Bash
+disable_model_invocation: true
 ---
 
 # workspace-flatten

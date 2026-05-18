@@ -4,6 +4,7 @@ description: Check whether the last git commit in the current repo has the Claud
   co-author trailer. If missing, amend it. Triggers on "add co-author", "fix co-author",
   "missing co-author", "add claude to commit", "co-author trailer".
 allowed-tools: Bash
+disable_model_invocation: true
 ---
 
 # co-author-fix

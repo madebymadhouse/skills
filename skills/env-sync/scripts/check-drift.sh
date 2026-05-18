@@ -4,7 +4,6 @@
 
 set -uo pipefail
 
-SSH_TARGET="${VPS_SSH_TARGET:-vps}"
 COMMANDS_DIR="$HOME/.claude/commands"
 WSL_SCRIPT="$COMMANDS_DIR/wsl-audit/scripts/collect-wsl.sh"
 VPS_SCRIPT="$COMMANDS_DIR/vps-audit/scripts/collect-vps.sh"
@@ -31,9 +30,9 @@ echo "--- actual orgs in ~/dev ---"
 find ~/dev -maxdepth 1 -mindepth 1 -type d | xargs -I{} basename {} | sort
 
 echo "--- orgs mentioned in wsl-audit SKILL.md ---"
-grep -oE '\*\*[^/*]+/\*\*' "$COMMANDS_DIR/wsl-audit/SKILL.md" 2>/dev/null \
-  | grep -oE '[^*]+/' \
-  | sed 's|/||' \
+grep -oE '\*\*(orinadus|mad-house|personal|secrets-master)[^*]*\*\*' \
+  "$COMMANDS_DIR/wsl-audit/SKILL.md" 2>/dev/null \
+  | grep -oE '(orinadus|mad-house|personal|secrets-master)[^/]*' \
   | sort -u || echo "(could not extract)"
 
 echo ""
@@ -41,11 +40,11 @@ echo ""
 echo "=== VPS_CONTAINER_DRIFT ==="
 # Check if VPS has containers not grouped in vps-audit synthesis instructions
 echo "--- containers VPS currently runs (short names) ---"
-ssh -q "$SSH_TARGET" "docker ps --format '{{.Names}}' 2>/dev/null | sed 's/-[a-z0-9]\{24\}\(-[0-9]\{12\}\)\{0,1\}//g'" 2>/dev/null | sort || echo "(ssh failed or docker not available)"
+ssh -q vps "docker ps --format '{{.Names}}' 2>/dev/null | sed 's/-[a-z0-9]\{24\}\(-[0-9]\{12\}\)\{0,1\}//g'" 2>/dev/null | sort || echo "(ssh failed or docker not available)"
 
-echo "--- project groups mentioned in vps-audit SKILL.md ---"
-grep -oE '\*\*[^*]+\*\*' "$COMMANDS_DIR/vps-audit/SKILL.md" 2>/dev/null \
-  | grep -v '^\*\*$' \
+echo "--- groups mentioned in vps-audit SKILL.md ---"
+grep -oE '\*\*(Coolify infrastructure|Orinadus|Mad House|Personal)[^*]*\*\*' \
+  "$COMMANDS_DIR/vps-audit/SKILL.md" 2>/dev/null \
   | sort -u || echo "(could not extract)"
 
 echo ""
@@ -86,11 +85,13 @@ echo "(end)"
 
 echo ""
 echo "=== OLLAMA_MODELS_DRIFT ==="
+# Current Ollama models — compare against what's mentioned in any skill docs or context
 echo "--- currently installed ---"
 ollama list 2>/dev/null || echo "(ollama not running)"
 echo ""
 
 echo "=== RUNTIME_VERSIONS ==="
+# Snapshot current versions for staleness tracking
 echo "node: $(node --version 2>/dev/null || echo not found)"
 echo "npm: $(npm --version 2>/dev/null || echo not found)"
 echo "rust: $(rustc --version 2>/dev/null || echo not found)"

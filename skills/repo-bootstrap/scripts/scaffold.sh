@@ -3,23 +3,25 @@
 # Creates a GitHub repo and writes standard files
 set -euo pipefail
 
-REPO_ORG="${REPO_ORG:-}"
+REPO_ORG="${REPO_ORG:-madebymadhouse}"
 REPO_NAME="${REPO_NAME:-}"
 REPO_DESC="${REPO_DESC:-}"
-LOCAL_PARENT="${LOCAL_PARENT:-$HOME/dev}"
 REPO_VISIBILITY="${REPO_VISIBILITY:-public}"
 REPO_TYPE="${REPO_TYPE:-tool}"
 
-if [[ -z "$REPO_ORG" ]]; then
-  echo '{"created":false,"error":"REPO_ORG is required"}'; exit 1
-fi
 if [[ -z "$REPO_NAME" ]]; then
   echo '{"created":false,"error":"REPO_NAME is required"}'; exit 1
 fi
 
-LOCAL_PARENT="${LOCAL_PARENT/#\~/$HOME}"
+# Determine local parent path
+case "$REPO_ORG" in
+  madebymadhouse)   LOCAL_PARENT="${HOME}/dev/mad-house" ;;
+  orinadus-systems) LOCAL_PARENT="${HOME}/dev/orinadus" ;;
+  samhcharles)      LOCAL_PARENT="${HOME}/dev/personal" ;;
+  *) echo "{\"created\":false,\"error\":\"unknown org: $REPO_ORG\"}"; exit 1 ;;
+esac
+
 LOCAL_PATH="${LOCAL_PARENT}/${REPO_NAME}"
-mkdir -p "$LOCAL_PARENT"
 
 if [[ -d "$LOCAL_PATH" ]]; then
   echo "{\"created\":false,\"error\":\"directory already exists: $LOCAL_PATH\"}"; exit 1

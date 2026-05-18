@@ -1,8 +1,7 @@
 ---
 name: env-sync
 description: Check whether the skill collection scripts are still accurate and up to date with the current environment. Detects drift between hardcoded lists in scripts and what actually exists — new AI tools installed, new projects added to ~/dev, new VPS containers, broken script paths. Use when the user says "sync my skills", "are my skills up to date", "update skill scripts", "check for drift", or after installing new tools or adding new projects. Also useful periodically to keep skills accurate.
-compatibility: Designed for Claude Code on WSL. Requires wsl-audit and vps-audit skills installed at ~/.claude/commands/. SSH access configured as "vps" alias required for VPS container drift detection.
-allowed-tools: Bash Read Edit
+disable_model_invocation: true
 ---
 
 # Env Sync

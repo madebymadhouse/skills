@@ -3,6 +3,7 @@ name: agent-fleet
 description: Manage the Mad House agent fleet. List all agents in the central registry, check which repos have which agents deployed, and sync agents from the registry to target repos. Use when adding a new agent to the fleet, syncing agents across repos, auditing what agents are deployed where, or rebuilding the agent registry. Triggers on "sync agents", "deploy agents", "what agents are deployed", "add agent to repo", "agent fleet", "update agents".
 compatibility: Designed for Claude Code at Mad House. Requires ~/dev/mad-house/skills/agents/ as the central registry and gh CLI for repo operations.
 allowed-tools: Bash Read Write Edit
+disable_model_invocation: true
 ---
 
 # Agent Fleet

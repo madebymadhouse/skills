@@ -1,102 +1,50 @@
 ---
 name: wsl-debloat
-description: Free disk space on WSL by clearing package manager caches (npm, pip, pnpm, playwright, node-gyp, puppeteer, prisma, cargo, go-mod) and optionally pruning Docker on a remote VPS. Surveys first so you see exactly what's taking space before anything is deleted. Triggers on "free disk space", "clean up caches", "WSL disk full", "debloat", "clear npm cache", "clean caches", "disk is getting low", "how much space can I free".
-compatibility: Designed for Claude Code on WSL. VPS pruning requires VPS_SSH_HOST in ~/.secrets/master.env.
+description: Free disk space on WSL by clearing package manager caches (npm, pip, pnpm, playwright, node-gyp, puppeteer, prisma) and optionally pruning Docker build cache, images, and volumes on a remote VPS. Also reports lab node_modules. Triggers on "free disk space", "clean up caches", "WSL disk full", "debloat", "clear npm cache", "clean caches", "disk is getting low".
+license: MIT
+compatibility: Designed for Claude Code on WSL. VPS pruning requires SSH access configured as "vps" alias or VPS_SSH_HOST env var. Reads VPS_SSH_HOST from ~/.secrets/master.env if present.
 allowed-tools: Bash Read
+disable_model_invocation: true
 ---
 
 # WSL Debloat
 
-Two-phase: survey first, clean second. Never ask the user what to include — figure it out from the scan.
+Clears caches and frees disk space. The script handles all cleanup — your job is to decide which flags to pass based on what the user wants.
 
-## Tools
+## Flags
 
-### `scripts/scan.sh`
+| Flag | What it does |
+|------|-------------|
+| `--scan` | Report purgeable sizes only — no changes |
+| _(none)_ | WSL caches only — always safe |
+| `--vps` | Also prune Docker build cache, unused images, volumes on VPS via SSH |
+| `--clean-lab` | Also remove `node_modules` from mad-house projects |
+| Both | Full cleanup: WSL + VPS + mad-house node_modules |
 
-Survey disk state without cleaning anything.
+## Step 1 — Scan what's purgeable
 
-```
-Input:  (none)
-Output: {
-  wsl:  { disk: {used, total, percent}, caches: [{name, size, available}] },
-  vps:  { available: bool, disk: {...}, docker_df: string } | { available: false, reason },
-  lab:  { node_modules: [{path, size}] }
-}
-```
-
-### `scripts/clean_wsl.sh`
-
-Clear all WSL package manager caches (npm, pip, pnpm, playwright, node-gyp, puppeteer, prisma, cargo, go-mod).
-
-```
-Input:  (none)
-Output: { disk_before, disk_after, cleaned: [{name, freed}], skipped: [name] }
-```
-
-### `scripts/clean_vps.sh`
-
-Prune Docker build cache, unused images, and volumes on the VPS via SSH.
-
-```
-Input:  (none)
-Output: { available: bool, disk_before, disk_after, pruned: {build_cache, images, volumes} }
-```
-
-### `scripts/clean_lab.sh`
-
-Remove `node_modules` directories from all projects under `~/dev`.
-
-```
-Input:  (none)
-Output: { removed: [{path, freed}], count } | { removed: [], note }
-```
-
-## Step 1 — Scan
-
-Always run this first:
+Always run scan first so you know what's available before touching anything:
 
 ```bash
-~/.claude/commands/wsl-debloat/scripts/scan.sh
+~/.claude/commands/wsl-debloat/scripts/debloat.sh --scan
 ```
 
-## Step 2 — Synthesize findings
+Report the sizes to the user. If VPS shows "(ssh failed)" or is missing, note that `--vps` won't work.
 
-Present what was found before cleaning:
+## Step 2 — Run
 
-**WSL caches** — list each cache with its size. Separate populated from empty.
-
-**VPS** — if `available: true`, show disk usage and the `docker_df` table. If `available: false`, note why (not configured vs unreachable).
-
-**Lab node_modules** — list each project and size. If none, say so.
-
-One sentence summary: "Found X MB across N caches on WSL, VPS Docker is clean, no lab node_modules."
-
-## Step 3 — Clean
-
-Run all applicable tools based on what the scan found. Do not ask for confirmation — just run them.
-
-- Always run `clean_wsl.sh` (safe, all caches are regenerated on demand)
-- Run `clean_vps.sh` only if `vps.available: true`
-- Run `clean_lab.sh` only if `lab.node_modules` is non-empty
-
-Run WSL and VPS in parallel if both apply:
+If the user asked for everything or the scan shows meaningful sizes, proceed. If they only said "free disk space", infer from context: WSL caches are always safe, VPS pruning requires explicit intent.
 
 ```bash
-~/.claude/commands/wsl-debloat/scripts/clean_wsl.sh
-~/.claude/commands/wsl-debloat/scripts/clean_vps.sh   # if VPS available
-~/.claude/commands/wsl-debloat/scripts/clean_lab.sh   # if node_modules found
+~/.claude/commands/wsl-debloat/scripts/debloat.sh [--vps] [--clean-lab]
 ```
 
-## Step 4 — Report
+## Step 3 — Report
 
-Show a tight summary:
+Read the BEFORE / AFTER disk usage and the per-cache summary. Report:
+- Total space freed (WSL side)
+- VPS space freed (if `--vps`)
+- node_modules removed (if `--clean-lab`)
+- Any caches that were already empty
 
-**WSL** — list each cache freed with its size. Show disk before → after (e.g. "35G → 34G"). If a cache was already empty, list it under "already clean" in one line.
-
-**VPS** — show what Docker pruned per category. Show disk before → after.
-
-**Lab** — list each project removed and size freed.
-
-**Total** — one sentence: what was freed overall, where.
-
-If everything was already clean, say so in one sentence. Don't pad.
+One paragraph is enough unless the user wants details.

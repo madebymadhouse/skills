@@ -39,6 +39,9 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | Skill | What it does |
 |-------|-------------|
 | [incubate](skills/incubate/) | Mad House project tracker. Take an idea from concept to shipped, one stage at a time. |
+| [repo-bootstrap](skills/repo-bootstrap/) | Scaffold a new GitHub repo with all standard files: README, .gitignore, Dockerfile, CHANGELOG. One command, push-ready. |
+| [nb-new](skills/nb-new/) | Create a new Jupyter notebook (.ipynb) with correct structure. No format guessing. |
+| [nb-add](skills/nb-add/) | Append a markdown or code cell to any existing notebook without touching the JSON structure. |
 | [uninstall](skills/uninstall/) | Completely remove any tool. Finds every trace across package managers, config folders, and caches. |
 
 ### Ship things
@@ -48,6 +51,15 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | [coolify-deploy](skills/coolify-deploy/) | Deploy or restart any Coolify service from chat. Lists what's running, triggers a deploy, and tails logs if it fails. |
 | [skill-publish](skills/skill-publish/) | Package a local skill and push it to the public skills repo. Scrubs internals, updates the README, commits, and pushes. |
 | [agent-fleet](skills/agent-fleet/) | Manage your agent fleet. See what agents are deployed where, sync the registry to any repo, or add new agents. |
+| [co-author-fix](skills/co-author-fix/) | Ensure the last git commit has a Claude co-author trailer. Amends silently if missing. |
+
+### Audit and maintain
+
+| Skill | What it does |
+|-------|-------------|
+| [agents-md-sync](skills/agents-md-sync/) | Verify every path in your AGENTS.md files exists on disk. Catches stale references before they cause confusion. |
+| [gh-org-audit](skills/gh-org-audit/) | Audit your GitHub orgs: stale live repos, local clones of archived repos, repos missing standard files. |
+| [workspace-flatten](skills/workspace-flatten/) | Find repos nested in wrong paths and move them to a flat layout. Pushes first, never drops uncommitted work. |
 
 ---
 

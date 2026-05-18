@@ -41,6 +41,14 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | [incubate](skills/incubate/) | Mad House project tracker. Take an idea from concept to shipped, one stage at a time. |
 | [uninstall](skills/uninstall/) | Completely remove any tool. Finds every trace across package managers, config folders, and caches. |
 
+### Ship things
+
+| Skill | What it does |
+|-------|-------------|
+| [coolify-deploy](skills/coolify-deploy/) | Deploy or restart any Coolify service from chat. Lists what's running, triggers a deploy, and tails logs if it fails. |
+| [skill-publish](skills/skill-publish/) | Package a local skill and push it to the public skills repo. Scrubs internals, updates the README, commits, and pushes. |
+| [agent-fleet](skills/agent-fleet/) | Manage your agent fleet. See what agents are deployed where, sync the registry to any repo, or add new agents. |
+
 ---
 
 ## Installing a skill

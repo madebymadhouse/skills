@@ -14,29 +14,85 @@ Triggers and monitors deployments on the Coolify VPS via the REST API.
 
 Service to deploy: $ARGUMENTS
 
-## Step 1 — Run
+## Tools
 
-If no argument was given, list all deployable services and ask the user which one:
+Each script is a single-purpose tool that returns JSON.
 
-```bash
-~/.claude/commands/coolify-deploy/scripts/deploy.sh list
+### `scripts/list.sh`
+
+List all applications and services.
+
+```
+Input:  (none)
+Output: { applications: [{ uuid, name, status, fqdn }], services: [{ uuid, name, status, fqdn }] }
 ```
 
-If a service name was given:
+### `scripts/start.sh <uuid>`
 
-```bash
-~/.claude/commands/coolify-deploy/scripts/deploy.sh deploy "$ARGUMENTS"
+Trigger a deploy/start for an application.
+
+```
+Input:  uuid (string, required)
+Output: { triggered: bool, uuid: string, name: string }
 ```
 
-## Step 2 — Report
+### `scripts/status.sh <uuid>`
 
-For `list`: show a clean table of all applications and services with their current status. Let the user pick one.
+Get the current status of an application.
 
-For `deploy`:
-- Confirm which service was matched (name + UUID)
-- Report deploy triggered
-- Show the status polling output until the deploy completes or fails
-- If it fails, show the last 20 lines of logs so the user knows why
-- If it succeeds, confirm the service is healthy
+```
+Input:  uuid (string, required)
+Output: { uuid, name, status, healthy: bool }
+```
 
-One clear outcome: deployed and healthy, or failed with reason.
+`status` values: `running`, `exited`, `stopped`, `starting`, `unknown`
+
+### `scripts/logs.sh <uuid> [--lines N]`
+
+Fetch recent deployment logs.
+
+```
+Input:  uuid (string, required), --lines N (optional, default 20)
+Output: { uuid: string, lines: [string] }
+```
+
+## Workflow
+
+**If no argument was given** — list all services and ask the user which one:
+
+```bash
+~/.claude/commands/coolify-deploy/scripts/list.sh
+```
+
+Show a clean table of name, status, fqdn. Let the user pick one by name.
+
+**If a service name was given** — fuzzy match from the list, then deploy:
+
+1. Run `list.sh` and find the application whose name contains `$ARGUMENTS` (case-insensitive)
+   - No match: show the full list and ask the user to clarify
+   - Multiple matches: show the candidates and ask the user to pick
+   - One match: confirm the name and UUID, then proceed
+
+2. Trigger the deploy:
+
+```bash
+~/.claude/commands/coolify-deploy/scripts/start.sh <uuid>
+```
+
+3. Poll status every 5 seconds until `healthy: true` or a failed state. Run up to 24 polls (2 minutes):
+
+```bash
+~/.claude/commands/coolify-deploy/scripts/status.sh <uuid>
+```
+
+4. If status is `running` / `healthy: true`: confirm success.
+
+5. If status is `exited` or `stopped`, or after timeout: fetch logs and show why it failed:
+
+```bash
+~/.claude/commands/coolify-deploy/scripts/logs.sh <uuid> --lines 30
+```
+
+## Report
+
+One clear outcome: deployed and healthy, or failed with the reason from logs.

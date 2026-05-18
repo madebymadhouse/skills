@@ -17,21 +17,27 @@ if [[ -z "$COOLIFY_API_BASE" || -z "$COOLIFY_API_TOKEN" ]]; then
   echo '{"error":"COOLIFY_API_BASE or COOLIFY_API_TOKEN not set"}' >&2; exit 1
 fi
 
-apps=$(curl -sf -X GET \
+tmpapps=$(mktemp)
+tmpsvc=$(mktemp)
+trap 'rm -f "$tmpapps" "$tmpsvc"' EXIT
+
+curl -sf -X GET \
   -H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "${COOLIFY_API_BASE}/api/v1/applications" 2>/dev/null || echo "[]")
+  "${COOLIFY_API_BASE}/api/v1/applications" 2>/dev/null > "$tmpapps" || echo "[]" > "$tmpapps"
 
-services=$(curl -sf -X GET \
+curl -sf -X GET \
   -H "Authorization: Bearer ${COOLIFY_API_TOKEN}" \
   -H "Content-Type: application/json" \
-  "${COOLIFY_API_BASE}/api/v1/services" 2>/dev/null || echo "[]")
+  "${COOLIFY_API_BASE}/api/v1/services" 2>/dev/null > "$tmpsvc" || echo "[]" > "$tmpsvc"
 
-python3 - <<EOF
+python3 - "$tmpapps" "$tmpsvc" <<'EOF'
 import json, sys
 
-apps = json.loads('''${apps}''')
-services = json.loads('''${services}''')
+with open(sys.argv[1]) as f:
+    apps = json.load(f)
+with open(sys.argv[2]) as f:
+    services = json.load(f)
 
 out = {
     "applications": [

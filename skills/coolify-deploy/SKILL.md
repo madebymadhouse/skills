@@ -27,6 +27,18 @@ Input:  (none)
 Output: { applications: [{ uuid, name, status, fqdn }], services: [{ uuid, name, status, fqdn }] }
 ```
 
+### `scripts/search.sh <query>`
+
+Fuzzy match an application by name (case-insensitive substring).
+
+```
+Input:  query (string, required)
+Output: { matched: bool, uuid: string, name: string, candidates: [{ uuid, name, status }] }
+```
+
+`matched: true` means exactly one result — `uuid` and `name` are set.
+`matched: false` means zero or multiple results — `candidates` lists all options (or all apps if no matches).
+
 ### `scripts/start.sh <uuid>`
 
 Trigger a deploy/start for an application.
@@ -66,12 +78,17 @@ Output: { uuid: string, lines: [string] }
 
 Show a clean table of name, status, fqdn. Let the user pick one by name.
 
-**If a service name was given** — fuzzy match from the list, then deploy:
+**If a service name was given** — fuzzy match, then deploy:
 
-1. Run `list.sh` and find the application whose name contains `$ARGUMENTS` (case-insensitive)
-   - No match: show the full list and ask the user to clarify
-   - Multiple matches: show the candidates and ask the user to pick
-   - One match: confirm the name and UUID, then proceed
+1. Run `search.sh` with the argument:
+
+```bash
+~/.claude/commands/coolify-deploy/scripts/search.sh "$ARGUMENTS"
+```
+
+   - `matched: false`, empty candidates: run `list.sh` and show the full table, ask the user to clarify
+   - `matched: false`, candidates present: show the candidates and ask the user to pick
+   - `matched: true`: confirm the name and UUID, then proceed
 
 2. Trigger the deploy:
 

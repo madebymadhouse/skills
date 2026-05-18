@@ -27,7 +27,8 @@ if [[ ! -d "${REPO_DIR}" ]]; then
 fi
 
 # Copy skill into repo, excluding local-only artifacts
-rsync -av --delete \
+# No --delete: repo may have files (LICENSE, etc.) not present locally
+rsync -av \
   --exclude='*.pyc' \
   --exclude='__pycache__' \
   --exclude='.DS_Store' \

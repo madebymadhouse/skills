@@ -44,6 +44,7 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | [nb-add](skills/nb-add/) | Append a markdown or code cell to any existing notebook without touching the JSON structure. |
 | [uninstall](skills/uninstall/) | Completely remove any tool. Finds every trace across package managers, config folders, and caches. |
 | [confirm-gate](skills/confirm-gate/) | Claude surfaces its interpretation of your task before writing a single line. Catches wrong assumptions before they cost you. Auto-applied by Claude — not user-invoked. |
+| [banner-design](skills/banner-design/) | Generate SVG hero banners and rounded-corner navigation buttons for GitHub READMEs. Repeatable — run again to regenerate with different parameters. |
 
 ### Ship things
 

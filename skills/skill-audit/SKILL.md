@@ -1,89 +1,101 @@
 ---
 name: skill-audit
-description: Audit all skills in ~/.claude/commands/ for quality, structure, and efficiency. Finds deterministic steps that should be extracted into scripts, AI interpretation of things that are actually fixed operations, duplicated logic across skills, missing folder structure, weak descriptions, and composability opportunities. Use when the user says "audit my skills", "review my skills", "improve my skills", "check skill quality", or wants to make skills more efficient or composable.
-compatibility: Designed for Claude Code. Skills must be installed at ~/.claude/commands/ using the folder-based structure with SKILL.md files.
-allowed-tools: Bash Read Edit
+description: Audit skills for quality, structure, and efficiency. Finds deterministic steps that should be scripts, duplicated logic across skills, composability gaps, and weak descriptions. Run after creating or updating any skill, or when the user says "audit my skills", "review my skills", "check skill quality", "is this skill good", or "improve my skills".
 ---
 
 # Skill Audit
 
-Scan all skills, then apply judgment to identify what should change and why. The script handles detection — you handle the decisions.
+Scan skills, then apply judgment to identify what should change and why. The script does detection — you do the decisions.
+
+## Input
+
+- `$ARGUMENTS` (optional) — a specific skill name to audit in focused mode. Omit to audit all skills.
 
 ## Step 1 — Scan
 
 ```bash
-~/.claude/commands/skill-audit/scripts/scan-skills.sh
+~/.claude/commands/skill-audit/scripts/scan-skills.sh $ARGUMENTS
 ```
 
-## Step 2 — Analyze and Report
+If `$ARGUMENTS` is empty, scans all skills. If a skill name is provided, scans only that skill (faster, used automatically after creation).
 
-Work through each finding category:
+## Step 2 — Analyze
+
+Work through each section of the scan output:
 
 ---
-
-### Structure Audit
-From SKILL_STRUCTURES and SKILL_INVENTORY:
-
-Flag any skill that is:
-- Still a flat `.md` file instead of a folder with `SKILL.md` → needs migration
-- A folder but missing `scripts/` despite having inline bash blocks → candidate for extraction
-- A folder with scripts but the SKILL.md still has inline bash doing what the script should do
 
 ### Deterministic Step Audit
-From INLINE_BASH_COMMANDS and BASH_BLOCKS_PER_SKILL:
+From `INLINE_BASH_COMMANDS` and `BASH_BLOCKS_PER_SKILL`:
 
-For each bash block in each skill, classify:
-- **Script already exists, block just calls it** → correct ✓
-- **Pure data collection** (cat, ls, find, grep, uname, df, free, ssh + read-only commands) → should be in a script, not inline
-- **Text transformation** (sed, awk, cut, tr — without conditional logic) → deterministic, should be in a script
-- **Conditional logic / judgment** (if/then, case, comparing outputs, decisions) → belongs in SKILL.md, AI handles it
-- **Complex pipeline doing what a 10-line script would do** → extract to script
+For each bash block, classify the operation:
 
-For every deterministic block found inline: show the exact block, then show what the script extraction would look like. Label it clearly as a suggestion.
+| Classification | What it looks like | Verdict |
+|---|---|---|
+| Calls an existing script | `~/.claude/commands/*/scripts/*.sh` | Correct — no change |
+| Pure data collection | `cat`, `ls`, `find`, `grep`, `uname`, `df`, `free`, `ssh` + read-only | Extract to script |
+| Text transformation | `sed`, `awk`, `cut`, `tr` with no conditionals | Extract to script |
+| Conditional / judgment | `if`/`then`, `case`, comparisons, decisions | Keep in SKILL.md |
+| Complex pipeline | >5 piped commands doing what a script would do | Extract to script |
 
-### Duplication Audit
-From DUPLICATE_COMMANDS:
+For every deterministic block: show BEFORE (the inline block) and AFTER (what the extracted script would look like). Label clearly.
 
-For each command pattern that appears in 2+ skills:
-- Which skills contain it
-- Is it already extracted to a shared script, or is it duplicated inline?
-- If duplicated: suggest which skill should own the script and how others should reference it
+### Shared Script Opportunities
+From `SHARED_SCRIPT_OPPORTUNITIES`:
+
+For each match: the skill has inline bash that already exists as a script in another skill. Suggest calling that script directly instead. Name which skill owns it and what the call would look like.
 
 ### Composability Audit
-Look at the skill set as a whole:
+From `DUPLICATE_COMMANDS` and the full skill set:
+
 - Does any skill re-implement data collection that another skill's script already provides?
-- Could any skill call another skill's collection script instead of duplicating it?
+- Could any skill call another skill's script instead of duplicating the logic?
 - Are there skills that should chain (one's output is another's input)?
 
-### Description Quality Audit
-From DESCRIPTION_LENGTHS:
-- Descriptions under 80 chars are likely too short to trigger reliably — flag them
-- Check if descriptions include specific trigger phrases ("use when the user says...")
-- Check if descriptions say what the skill does AND when to use it (both are required for good triggering)
+For each duplication: name both skills, show the duplicated lines, suggest which one should own a shared script.
+
+### Structure Audit
+From `SKILL_STRUCTURES`:
+
+Flag any skill that:
+- Has inline bash blocks but no `scripts/` folder — extraction candidate
+- Has a `scripts/` folder but SKILL.md still has inline data collection — incomplete extraction
+- Is a flat `.md` file (not a folder) — needs migration to folder format
+
+### Description Quality
+From `DESCRIPTION_LENGTHS`:
+
+- Under 80 chars: likely too short to trigger reliably
+- Missing trigger phrases ("use when the user says...")
+- Missing both what-it-does AND when-to-use — both are required for reliable triggering
 
 ### Missing Metadata
-From MISSING_ARGUMENT_HINTS:
-- Flag any skill that uses `$ARGUMENTS` without declaring `argument-hint` in frontmatter
+From `MISSING_ARGUMENT_HINTS`:
+
+Flag any skill using `$ARGUMENTS` without `argument-hint` in frontmatter.
 
 ---
 
-### Output Format
+## Step 3 — Output
 
-For each issue found, report:
+For each issue found:
 
 ```
 SKILL: <name>
-ISSUE: <what's wrong>
+ISSUE: <what's wrong, one sentence>
 SEVERITY: high | medium | low
-FIX: <exactly what to change — code diff if applicable>
-WHY: <the reason this matters>
+BEFORE:
+  <the current inline bash block or current description>
+AFTER:
+  <the extracted script content or improved description>
+WHY: <the reason — reuse, token savings, trigger reliability, etc.>
 ```
 
-Group by severity. High = token waste, duplication, or broken behavior. Medium = structure/quality. Low = polish.
+Group by severity. High = duplicated logic, broken triggering, or token waste. Medium = extraction opportunity. Low = description polish.
 
-After the issue list, provide a **Summary Table**:
+**Summary Table** after all issues:
 
-| Skill | Flat→Folder | Extract to Script | Duplication | Description | Total Issues |
-|-------|-------------|-------------------|-------------|-------------|--------------|
+| Skill | Extract to Script | Shared Script | Description | Total |
+|-------|-------------------|---------------|-------------|-------|
 
-End with a prioritized **Action List** — the 3-5 highest-value changes to make next.
+**Action List** at the end — the 3 highest-value changes to make now, in order.

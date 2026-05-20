@@ -58,13 +58,6 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | [agent-fleet](skills/agent-fleet/) | Manage your agent fleet. See what agents are deployed where, sync the registry to any repo, or add new agents. |
 | [co-author-fix](skills/co-author-fix/) | Ensure the last git commit has a Claude co-author trailer. Amends silently if missing. |
 
-### Urchin data pipeline
-
-| Skill | What it does |
-|-------|-------------|
-| [urchin-collect](skills/urchin-collect/) | Run Urchin connectors to ingest new events. Shows which import directories have data ready. |
-| [pull-urchin](skills/pull-urchin/) | Pull recent Urchin events into a vault. Maps by event kind to dated markdown files, commits. |
-
 ### Manage your workspace
 
 | Skill | What it does |

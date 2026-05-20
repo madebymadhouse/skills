@@ -43,8 +43,11 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | [nb-new](skills/nb-new/) | Create a new Jupyter notebook (.ipynb) with correct structure. No format guessing. |
 | [nb-add](skills/nb-add/) | Append a markdown or code cell to any existing notebook without touching the JSON structure. |
 | [uninstall](skills/uninstall/) | Completely remove any tool. Finds every trace across package managers, config folders, and caches. |
-| [confirm-gate](skills/confirm-gate/) | Claude surfaces its interpretation of your task before writing a single line. Catches wrong assumptions before they cost you. Auto-applied by Claude — not user-invoked. |
-| [banner-design](skills/banner-design/) | Generate SVG hero banners and rounded-corner navigation buttons for GitHub READMEs. Repeatable — run again to regenerate with different parameters. |
+| [confirm-gate](skills/confirm-gate/) | Claude surfaces its interpretation of your task before writing a single line. Catches wrong assumptions before they cost you. Auto-applied by Claude -- not user-invoked. |
+| [banner-design](skills/banner-design/) | Generate SVG hero banners and rounded-corner navigation buttons for GitHub READMEs. Repeatable -- run again to regenerate with different parameters. |
+| [cargo-check](skills/cargo-check/) | Pre-commit Rust check: fmt, clippy, tests. Catches the format issues that break CI before you push. Pass `--fix` to auto-format. |
+| [rust-release](skills/rust-release/) | Cut a Rust release. Bumps version, updates CHANGELOG, runs checks, tags, and pushes. |
+| [snapshot](skills/snapshot/) | Take a Windows screenshot and let Claude see it. Works for debugging TUIs, terminals, or anything on screen. |
 
 ### Ship things
 
@@ -54,6 +57,13 @@ A skill is a superpower for Claude. You describe what you want, Claude picks up 
 | [skill-publish](skills/skill-publish/) | Package a local skill and push it to the public skills repo. Scrubs internals, updates the README, commits, and pushes. |
 | [agent-fleet](skills/agent-fleet/) | Manage your agent fleet. See what agents are deployed where, sync the registry to any repo, or add new agents. |
 | [co-author-fix](skills/co-author-fix/) | Ensure the last git commit has a Claude co-author trailer. Amends silently if missing. |
+
+### Urchin data pipeline
+
+| Skill | What it does |
+|-------|-------------|
+| [urchin-collect](skills/urchin-collect/) | Run Urchin connectors to ingest new events. Shows which import directories have data ready. |
+| [pull-urchin](skills/pull-urchin/) | Pull recent Urchin events into a vault. Maps by event kind to dated markdown files, commits. |
 
 ### Manage your workspace
 

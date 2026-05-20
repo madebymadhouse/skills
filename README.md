@@ -1,4 +1,8 @@
-# Mad House Skills
+![Skills banner](assets/banner.svg)
+
+<a href="#browse-skills"><img src="assets/buttons/btn-browse-skills.svg" alt="Browse Skills" /></a>&nbsp;<a href="#install"><img src="assets/buttons/btn-install.svg" alt="Install" /></a>&nbsp;<a href="#how-it-works"><img src="assets/buttons/btn-how-it-works.svg" alt="How it Works" /></a>
+
+---
 
 **A build house, incubating in the open.**
 

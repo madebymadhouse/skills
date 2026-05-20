@@ -1,6 +1,6 @@
 ---
 name: uninstall
-description: Cleanly uninstall a CLI tool or package from WSL — finds every trace across npm, pip, cargo, config dirs, caches, VS Code extensions, and home files, then removes what the user confirms. Use when the user wants to fully remove a tool, package, or CLI from the WSL environment. Triggers on "uninstall", "remove", "get rid of", "clean up" followed by a tool name.
+description: Cleanly uninstall a CLI tool or package from WSL - finds every trace across npm, pip, cargo, config dirs, caches, VS Code extensions, and home files, then removes what the user confirms. Use when the user wants to fully remove a tool, package, or CLI from the WSL environment. Triggers on "uninstall", "remove", "get rid of", "clean up" followed by a tool name.
 argument-hint: <tool-name>
 disable_model_invocation: true
 ---
@@ -13,7 +13,7 @@ Completely remove all traces of a CLI tool or package from WSL.
 
 The user wants to uninstall: $ARGUMENTS
 
-## Step 1 — Find all traces
+## Step 1 - Find all traces
 
 The collection script searches every likely install location deterministically.
 
@@ -21,25 +21,25 @@ The collection script searches every likely install location deterministically.
 ~/.claude/commands/uninstall/scripts/collect-install-traces.sh "$ARGUMENTS"
 ```
 
-## Step 2 — Categorize
+## Step 2 - Categorize
 
-Read the script output and group findings. This is where judgment is needed — the script finds everything, you decide what matters.
+Read the script output and group findings. This is where judgment is needed - the script finds everything, you decide what matters.
 
-- **Package manager installs** (npm global, pip, pipx, cargo) — safe to remove via the package manager; this also cleans the binary symlink
-- **Standalone binaries** — if not from a package manager, note the path; user decides
-- **Config / auth data** (`~/.<tool>`, `~/.config/<tool>`, etc.) — ask if they want to preserve settings before removing (e.g. if reinstalling)
-- **Caches** (npx cache, npm cache, zed cache) — safe to remove
-- **VS Code extensions** — ask explicitly; user may want to keep them
-- **User project files** (anything inside `~/dev/`) — never remove; flag as FYI only
-- **Systemd units** — flag for manual review; do not auto-remove
+- **Package manager installs** (npm global, pip, pipx, cargo) - safe to remove via the package manager; this also cleans the binary symlink
+- **Standalone binaries** - if not from a package manager, note the path; user decides
+- **Config / auth data** (`~/.<tool>`, `~/.config/<tool>`, etc.) - ask if they want to preserve settings before removing (e.g. if reinstalling)
+- **Caches** (npx cache, npm cache, zed cache) - safe to remove
+- **VS Code extensions** - ask explicitly; user may want to keep them
+- **User project files** (anything inside `~/dev/`) - never remove; flag as FYI only
+- **Systemd units** - flag for manual review; do not auto-remove
 
 Present the categorized list clearly. Flag anything ambiguous.
 
-## Step 3 — Ask about VS Code extensions (if found)
+## Step 3 - Ask about VS Code extensions (if found)
 
 If VS Code extensions appeared in VSCODE_EXTENSIONS, ask the user before removing.
 
-## Step 4 — Remove
+## Step 4 - Remove
 
 Remove everything the user confirmed, in this order:
 1. Package manager uninstall first (cleans binary automatically):
@@ -53,7 +53,7 @@ Remove everything the user confirmed, in this order:
 
 Never remove anything in `~/dev/` or systemd units without explicit user confirmation.
 
-## Step 5 — Verify
+## Step 5 - Verify
 
 ```bash
 which "$ARGUMENTS" 2>/dev/null && echo "binary still present" || echo "binary gone"

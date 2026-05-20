@@ -15,7 +15,7 @@ Takes a skill from `~/.claude/commands/` and packages it into the public skills 
 
 Skill to publish: $ARGUMENTS
 
-## Step 1 — Stage
+## Step 1 - Stage
 
 ```bash
 ~/.claude/commands/skill-publish/scripts/stage.sh "$ARGUMENTS"
@@ -23,7 +23,7 @@ Skill to publish: $ARGUMENTS
 
 If the script exits with an error, stop and explain what's wrong.
 
-## Step 2 — Review for internals
+## Step 2 - Review for internals
 
 Read every file in `~/dev/mad-house/skills/skills/$ARGUMENTS/` and check for:
 
@@ -38,13 +38,13 @@ Mad House branding and org identity (e.g. `madebymadhouse`, `mad-house/lab`) is 
 
 If you find anything that needs scrubbing, fix it before continuing.
 
-## Step 3 — Update the README
+## Step 3 - Update the README
 
 Open `~/dev/mad-house/skills/README.md` and add the skill to the correct section of the skills table. Use the same one-line description style as existing entries.
 
 If it does not fit an existing section, add a new one.
 
-## Step 4 — Commit and push
+## Step 4 - Commit and push
 
 ```bash
 cd ~/dev/mad-house/skills && git add . && git commit -m "Add $ARGUMENTS skill

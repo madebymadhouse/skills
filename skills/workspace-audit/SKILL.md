@@ -8,29 +8,29 @@ allowed-tools: Bash Read
 
 # Workspace Audit
 
-Scans all git repos under `~/dev` for issues that need attention. The script handles all detection — your job is to synthesize the output and tell the user what needs action.
+Scans all git repos under `~/dev` for issues that need attention. The script handles all detection - your job is to synthesize the output and tell the user what needs action.
 
-## Step 1 — Collect
+## Step 1 - Collect
 
 ```bash
 ~/.claude/commands/workspace-audit/scripts/audit.sh
 ```
 
-## Step 2 — Synthesize
+## Step 2 - Synthesize
 
 Read the labeled sections and produce a concise report:
 
 ### Git Repos
 List every `NEEDS ATTENTION` entry with its flags. Group by type:
-- **DIRTY** — uncommitted changes
-- **UNTRACKED** — files not in git
-- **NO-REMOTE** — no origin configured
-- **AHEAD:N** — commits not pushed
+- **DIRTY** - uncommitted changes
+- **UNTRACKED** - files not in git
+- **NO-REMOTE** - no origin configured
+- **AHEAD:N** - commits not pushed
 
 Clean repos don't need a mention unless the user asks.
 
 ### Security Checks
-Report any `EXPOSED:` .env files or `TRACKED:` context files immediately — these are high-priority.
+Report any `EXPOSED:` .env files or `TRACKED:` context files immediately - these are high-priority.
 
 ### Disk Usage
 Report `~/dev/` total size.

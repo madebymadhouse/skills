@@ -1,6 +1,6 @@
 ---
 name: session-close
-description: End-of-session workspace sync — pull clean behind repos, push clean ahead repos, report dirty repos
+description: End-of-session workspace sync - pull clean behind repos, push clean ahead repos, report dirty repos
 allowed-tools: Bash
 disable_model_invocation: true
 ---
@@ -9,7 +9,7 @@ disable_model_invocation: true
 
 One command to end a session cleanly. Pulls all repos that are behind (fast-forward only), pushes all repos that are ahead, and reports everything dirty so nothing is left dangling.
 
-## Step 1 — Scan
+## Step 1 - Scan
 
 ```bash
 ~/.claude/commands/workspace-audit/scripts/git-scan.sh --fetch
@@ -17,7 +17,7 @@ One command to end a session cleanly. Pulls all repos that are behind (fast-forw
 
 Uses the shared git scanner with `--fetch` so ahead/behind counts are accurate.
 
-## Step 2 — Sync
+## Step 2 - Sync
 
 ```bash
 ~/.claude/commands/session-close/scripts/close.sh
@@ -30,7 +30,7 @@ The script:
 4. Skips repos that are dirty or have both ahead and behind (diverged)
 5. Outputs a summary: pulled, pushed, skipped-dirty, skipped-diverged
 
-## Step 3 — Report
+## Step 3 - Report
 
 After the script completes, present the result as a clean summary table:
 

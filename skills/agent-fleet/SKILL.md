@@ -10,13 +10,13 @@ disable_model_invocation: true
 
 Manages the Mad House agent fleet. The central registry lives at `~/dev/mad-house/skills/agents/`. Agents sync from there into `.github/agents/` of target repos.
 
-## Step 1 — Collect fleet state
+## Step 1 - Collect fleet state
 
 ```bash
 ~/.claude/commands/agent-fleet/scripts/collect-fleet.sh
 ```
 
-## Step 2 — Synthesize
+## Step 2 - Synthesize
 
 From the script output:
 
@@ -35,7 +35,7 @@ Present as a table:
 ### Gaps
 Flag any repo that has zero agents deployed. Flag any agent that exists in a repo but not in the registry (orphaned).
 
-## Step 3 — Act on user intent
+## Step 3 - Act on user intent
 
 **If the user wants to sync all agents to a specific repo:**
 Copy every agent from `~/dev/mad-house/skills/agents/` to `~/dev/<repo>/.github/agents/`, then commit and push that repo.

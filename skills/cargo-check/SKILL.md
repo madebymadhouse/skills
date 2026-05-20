@@ -27,9 +27,9 @@ bash ~/.claude/commands/cargo-check/scripts/check.sh
 
 ## What it does
 
-1. `cargo fmt --check` — if this fails, run `cargo fmt` then re-check
-2. `cargo clippy -- -D warnings` — zero warnings policy
-3. `cargo test --workspace` — all tests must pass
+1. `cargo fmt --check` - if this fails, run `cargo fmt` then re-check
+2. `cargo clippy -- -D warnings` - zero warnings policy
+3. `cargo test --workspace` - all tests must pass
 
 ## Auto-fix format issues
 

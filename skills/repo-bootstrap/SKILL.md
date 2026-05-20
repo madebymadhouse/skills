@@ -28,7 +28,7 @@ Creates a GitHub repo and writes all standard files.
 1. Collect: org, name, one-line description, visibility, type (service/lib/bot/tool)
 2. Run `scripts/scaffold.sh`
 3. Report the local path and GitHub URL
-4. Do NOT make the initial commit — the user reviews the files first
+4. Do NOT make the initial commit - the user reviews the files first
 
 ## Standard files written
 

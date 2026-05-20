@@ -1,6 +1,6 @@
 ---
 name: ops-audit
-description: Full eagle-eye ops audit across both WSL and a remote VPS simultaneously. Use when the user wants a complete picture of everything — what's running locally and in production, what's live vs local-only, cross-environment dependency map. Triggers on phrases like "full audit", "audit everything", "ops audit", "what do I have running", "overview of my stack", "eagle eye view", or "show me everything".
+description: Full eagle-eye ops audit across both WSL and a remote VPS simultaneously. Use when the user wants a complete picture of everything - what's running locally and in production, what's live vs local-only, cross-environment dependency map. Triggers on phrases like "full audit", "audit everything", "ops audit", "what do I have running", "overview of my stack", "eagle eye view", or "show me everything".
 compatibility: Designed for Claude Code on WSL. Requires both wsl-audit and vps-audit skills installed at ~/.claude/commands/. Requires SSH access configured as "vps" alias in ~/.ssh/config.
 allowed-tools: Bash Read
 ---
@@ -9,9 +9,9 @@ allowed-tools: Bash Read
 
 Full stack audit: local WSL machine + remote VPS. Both collection scripts run in parallel. Synthesize a unified cross-environment report from the combined output.
 
-## Step 1 — Collect both environments simultaneously
+## Step 1 - Collect both environments simultaneously
 
-Run these in parallel — do not wait for one before starting the other:
+Run these in parallel - do not wait for one before starting the other:
 
 ```bash
 ~/.claude/commands/wsl-audit/scripts/collect-wsl.sh
@@ -21,7 +21,7 @@ Run these in parallel — do not wait for one before starting the other:
 ~/.claude/commands/vps-audit/scripts/collect-vps.sh
 ```
 
-## Step 2 — Synthesize unified report
+## Step 2 - Synthesize unified report
 
 Use only observed data. No guessing.
 
@@ -44,7 +44,7 @@ From WSL AI_CLIENTS, OLLAMA_MODELS, SKILLS, AGENT_MANIFEST:
 Things on WSL that connect outward:
 - SSH config hosts (from WSL SSH section)
 - CF Worker projects from COMPOSE_AND_WRANGLER (wrangler.toml files)
-- External service env vars from BASHRC_ENV_VAR_NAMES (names only — no values)
+- External service env vars from BASHRC_ENV_VAR_NAMES (names only - no values)
 
 ---
 
@@ -64,7 +64,7 @@ From VPS TRAEFIK_ROUTES:
 |--------|----------|-----|
 
 ### Non-Docker Services
-From VPS SYSTEMD_SERVICES: tailscaled, fail2ban — status of each.
+From VPS SYSTEMD_SERVICES: tailscaled, fail2ban - status of each.
 
 ### Network Exposure
 From VPS LISTEN_PORTS and FIREWALL:
@@ -86,7 +86,7 @@ Projects in ~/dev with no corresponding running container on VPS.
 Which WSL projects deploy to the VPS, and how (Coolify, wrangler deploy, direct SSH, etc.).
 
 ### Flags
-Anything needing attention from either environment — unhealthy containers, resource pressure, security issues, stale projects, orphaned volumes.
+Anything needing attention from either environment - unhealthy containers, resource pressure, security issues, stale projects, orphaned volumes.
 
 ---
 

@@ -9,15 +9,15 @@ disable_model_invocation: true
 
 # Workspace Sync
 
-Pulls all clean repos under `~/dev` that are behind their upstream. The script handles all the git operations — your job is to summarize the result.
+Pulls all clean repos under `~/dev` that are behind their upstream. The script handles all the git operations - your job is to summarize the result.
 
-## Step 1 — Sync
+## Step 1 - Sync
 
 ```bash
 ~/.claude/commands/workspace-sync/scripts/sync.sh
 ```
 
-## Step 2 — Report
+## Step 2 - Report
 
 Read the output and summarize:
 

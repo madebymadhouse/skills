@@ -11,9 +11,9 @@ Add or remove frontmatter fields across multiple SKILL.md files in one shot. No 
 
 ## Input
 
-- `ACTION` — `add` or `remove`
-- `SKILLS` — space-separated skill names (or `--all` for every installed skill)
-- `FIELD` — the full frontmatter line to add or the key to remove (e.g. `disable_model_invocation: true`)
+- `ACTION` - `add` or `remove`
+- `SKILLS` - space-separated skill names (or `--all` for every installed skill)
+- `FIELD` - the full frontmatter line to add or the key to remove (e.g. `disable_model_invocation: true`)
 
 ## Usage
 
@@ -34,12 +34,12 @@ Add or remove frontmatter fields across multiple SKILL.md files in one shot. No 
 - For `remove`: deletes any line matching the key from the frontmatter block
 - Reports a per-skill result: `added`, `removed`, `already-present`, `already-absent`, `no-frontmatter`, `not-found`
 
-## Step 1 — Run
+## Step 1 - Run
 
 ```bash
 ~/.claude/commands/skill-flag/scripts/flag.sh <action> "<skills>" "<field>"
 ```
 
-## Step 2 — Report
+## Step 2 - Report
 
 Parse the JSON output and present a clean table of what changed.

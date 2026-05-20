@@ -26,7 +26,7 @@ For each nested repo: push unpushed commits, clone at flat level, remove old loc
 
 ## Workflow
 
-1. Run `scripts/scan.sh` — survey first, no side effects
+1. Run `scripts/scan.sh` - survey first, no side effects
 2. Show the table: what is nested, where it should go, whether it has unpushed work
 3. For repos with unpushed work: push first before removing
 4. For each repo: clone at flat level, verify identical remote, remove old path

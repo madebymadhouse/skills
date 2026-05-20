@@ -5,13 +5,13 @@ description: Audit skills for quality, structure, and efficiency. Finds determin
 
 # Skill Audit
 
-Scan skills, then apply judgment to identify what should change and why. The script does detection — you do the decisions.
+Scan skills, then apply judgment to identify what should change and why. The script does detection - you do the decisions.
 
 ## Input
 
-- `$ARGUMENTS` (optional) — a specific skill name to audit in focused mode. Omit to audit all skills.
+- `$ARGUMENTS` (optional) - a specific skill name to audit in focused mode. Omit to audit all skills.
 
-## Step 1 — Scan
+## Step 1 - Scan
 
 ```bash
 ~/.claude/commands/skill-audit/scripts/scan-skills.sh $ARGUMENTS
@@ -19,7 +19,7 @@ Scan skills, then apply judgment to identify what should change and why. The scr
 
 If `$ARGUMENTS` is empty, scans all skills. If a skill name is provided, scans only that skill (faster, used automatically after creation).
 
-## Step 2 — Analyze
+## Step 2 - Analyze
 
 Work through each section of the scan output:
 
@@ -32,7 +32,7 @@ For each bash block, classify the operation:
 
 | Classification | What it looks like | Verdict |
 |---|---|---|
-| Calls an existing script | `~/.claude/commands/*/scripts/*.sh` | Correct — no change |
+| Calls an existing script | `~/.claude/commands/*/scripts/*.sh` | Correct - no change |
 | Pure data collection | `cat`, `ls`, `find`, `grep`, `uname`, `df`, `free`, `ssh` + read-only | Extract to script |
 | Text transformation | `sed`, `awk`, `cut`, `tr` with no conditionals | Extract to script |
 | Conditional / judgment | `if`/`then`, `case`, comparisons, decisions | Keep in SKILL.md |
@@ -58,16 +58,16 @@ For each duplication: name both skills, show the duplicated lines, suggest which
 From `SKILL_STRUCTURES`:
 
 Flag any skill that:
-- Has inline bash blocks but no `scripts/` folder — extraction candidate
-- Has a `scripts/` folder but SKILL.md still has inline data collection — incomplete extraction
-- Is a flat `.md` file (not a folder) — needs migration to folder format
+- Has inline bash blocks but no `scripts/` folder - extraction candidate
+- Has a `scripts/` folder but SKILL.md still has inline data collection - incomplete extraction
+- Is a flat `.md` file (not a folder) - needs migration to folder format
 
 ### Description Quality
 From `DESCRIPTION_LENGTHS`:
 
 - Under 80 chars: likely too short to trigger reliably
 - Missing trigger phrases ("use when the user says...")
-- Missing both what-it-does AND when-to-use — both are required for reliable triggering
+- Missing both what-it-does AND when-to-use - both are required for reliable triggering
 
 ### Missing Metadata
 From `MISSING_ARGUMENT_HINTS`:
@@ -76,7 +76,7 @@ Flag any skill using `$ARGUMENTS` without `argument-hint` in frontmatter.
 
 ---
 
-## Step 3 — Output
+## Step 3 - Output
 
 For each issue found:
 
@@ -88,7 +88,7 @@ BEFORE:
   <the current inline bash block or current description>
 AFTER:
   <the extracted script content or improved description>
-WHY: <the reason — reuse, token savings, trigger reliability, etc.>
+WHY: <the reason - reuse, token savings, trigger reliability, etc.>
 ```
 
 Group by severity. High = duplicated logic, broken triggering, or token waste. Medium = extraction opportunity. Low = description polish.
@@ -98,4 +98,4 @@ Group by severity. High = duplicated logic, broken triggering, or token waste. M
 | Skill | Extract to Script | Shared Script | Description | Total |
 |-------|-------------------|---------------|-------------|-------|
 
-**Action List** at the end — the 3 highest-value changes to make now, in order.
+**Action List** at the end - the 3 highest-value changes to make now, in order.

@@ -16,7 +16,7 @@ Full health picture of your GitHub orgs: stale repos, missing files, archived re
 
 ### scripts/audit.sh
 Audits all configured orgs and reports: stale live repos, archived repos with local clones, repos missing standard files.
-- Input: `AUDIT_ORGS=<"orgname:~/local/path orgname2:~/local/path2">` — space-separated org:localpath pairs
+- Input: `AUDIT_ORGS=<"orgname:~/local/path orgname2:~/local/path2">` - space-separated org:localpath pairs
 - Input: `STALE_DAYS=<int>` days since last push to consider stale (default: 90)
 - Output:
   ```json

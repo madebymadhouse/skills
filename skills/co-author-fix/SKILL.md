@@ -22,8 +22,8 @@ Checks the last commit for the co-author trailer. Amends if missing.
 ## Workflow
 
 1. Run `bash scripts/fix.sh`
-2. If `had_trailer: true` — report "already present", done
-3. If `amended: true` — report the amended hash
+2. If `had_trailer: true` - report "already present", done
+3. If `amended: true` - report the amended hash
 4. If the commit is already pushed, warn that the amend requires a force-push
 
 ## Co-author format

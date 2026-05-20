@@ -1,6 +1,6 @@
 ---
 name: env-sync
-description: Check whether the skill collection scripts are still accurate and up to date with the current environment. Detects drift between hardcoded lists in scripts and what actually exists — new AI tools installed, new projects added to ~/dev, new VPS containers, broken script paths. Use when the user says "sync my skills", "are my skills up to date", "update skill scripts", "check for drift", or after installing new tools or adding new projects. Also useful periodically to keep skills accurate.
+description: Check whether the skill collection scripts are still accurate and up to date with the current environment. Detects drift between hardcoded lists in scripts and what actually exists - new AI tools installed, new projects added to ~/dev, new VPS containers, broken script paths. Use when the user says "sync my skills", "are my skills up to date", "update skill scripts", "check for drift", or after installing new tools or adding new projects. Also useful periodically to keep skills accurate.
 disable_model_invocation: true
 ---
 
@@ -8,13 +8,13 @@ disable_model_invocation: true
 
 Checks whether skill scripts have drifted from the current environment. The drift-check script handles all detection deterministically. Your job is to interpret the gaps and propose the exact edits needed.
 
-## Step 1 — Check for drift
+## Step 1 - Check for drift
 
 ```bash
 ~/.claude/commands/env-sync/scripts/check-drift.sh
 ```
 
-## Step 2 — Interpret and fix
+## Step 2 - Interpret and fix
 
 Work through each section:
 
@@ -54,9 +54,9 @@ Any `BROKEN:` line means a SKILL.md references a script path that doesn't exist.
 For each broken path:
 - Check if the script was moved (scan `scripts/` dirs for a file with the right name)
 - If found elsewhere, update the path in the SKILL.md
-- If the script is missing entirely, flag it — the skill will silently fail when invoked
+- If the script is missing entirely, flag it - the skill will silently fail when invoked
 
-This is high-priority — a broken script path causes silent failure with no error message to the user.
+This is high-priority - a broken script path causes silent failure with no error message to the user.
 
 ### Projects Without Sentinels (NEW_PROJECTS_NOT_IN_PROJECT_LANGS)
 

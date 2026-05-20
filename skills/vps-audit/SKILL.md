@@ -7,17 +7,17 @@ allowed-tools: Bash Read
 
 # VPS Audit
 
-All data collection runs in parallel via `scripts/collect-vps.sh` — SSH queries fire simultaneously. Your job is to synthesize the structured output. Do not re-run SSH commands yourself.
+All data collection runs in parallel via `scripts/collect-vps.sh` - SSH queries fire simultaneously. Your job is to synthesize the structured output. Do not re-run SSH commands yourself.
 
 **Setup:** Add a `vps` alias to `~/.ssh/config` pointing to your server, or edit `scripts/collect-vps.sh` to change the SSH target.
 
-## Step 1 — Collect
+## Step 1 - Collect
 
 ```bash
 ~/.claude/commands/vps-audit/scripts/collect-vps.sh
 ```
 
-## Step 2 — Synthesize
+## Step 2 - Synthesize
 
 Container names in the output have Coolify UUID suffixes stripped already.
 
@@ -38,7 +38,7 @@ For each container: status (healthy / unhealthy / up N days), CPU%, memory, expo
 Flag any container that is: unhealthy, exited/stopped, >10% CPU sustained, >500MB memory.
 
 ### Traefik Routing Table
-From TRAEFIK_ROUTES — present as a table:
+From TRAEFIK_ROUTES - present as a table:
 
 | Domain | Upstream | TLS |
 |--------|----------|-----|
@@ -48,7 +48,7 @@ From DOCKER_STORAGE: images / containers / volumes / build cache totals.
 From VOLUMES dangling section: list any orphaned volumes explicitly.
 
 ### Systemd Services (non-Docker)
-From SYSTEMD_SERVICES: note status of key services — tailscaled, fail2ban, docker, containerd, cron, sshd. Flag any that are absent or failing.
+From SYSTEMD_SERVICES: note status of key services - tailscaled, fail2ban, docker, containerd, cron, sshd. Flag any that are absent or failing.
 
 ### Network & Firewall
 From LISTEN_PORTS and FIREWALL, categorize by bind address:

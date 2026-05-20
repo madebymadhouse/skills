@@ -11,10 +11,10 @@ Renames a local repo directory and surgically updates every reference to the old
 
 ## Input
 
-- `OLD_NAME` — current folder name (e.g. `urchin-rust`)
-- `NEW_NAME` — target folder name (e.g. `urchin`)
+- `OLD_NAME` - current folder name (e.g. `urchin-rust`)
+- `NEW_NAME` - target folder name (e.g. `urchin`)
 
-## Step 1 — Find the repo
+## Step 1 - Find the repo
 
 ```bash
 ~/.claude/commands/repo-rename/scripts/rename.sh OLD_NAME NEW_NAME
@@ -28,7 +28,7 @@ The script:
 5. Replaces all occurrences in `~/AGENTS.md`, `~/dev/*/AGENTS.md`, and all `~/.claude/projects/*/memory/*.md` files
 6. Outputs a JSON summary of every file changed and replacement count
 
-## Step 2 — Report
+## Step 2 - Report
 
 Parse the JSON and report:
 - New path

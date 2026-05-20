@@ -7,15 +7,15 @@ allowed-tools: Bash Read
 
 # WSL Audit
 
-All data collection runs via `scripts/collect-wsl.sh`. Your job is to synthesize the structured output into a report — do not re-run collection commands yourself.
+All data collection runs via `scripts/collect-wsl.sh`. Your job is to synthesize the structured output into a report - do not re-run collection commands yourself.
 
-## Step 1 — Collect
+## Step 1 - Collect
 
 ```bash
 ~/.claude/commands/wsl-audit/scripts/collect-wsl.sh
 ```
 
-## Step 2 — Synthesize
+## Step 2 - Synthesize
 
 Read the labeled sections and produce the following report. Use only what the script returned.
 
@@ -28,7 +28,7 @@ From SYSTEM: hostname, OS, kernel, user, groups, sudo access.
 From RESOURCES: CPU cores, RAM total/used/free, disk used/total, swap if present.
 
 ### Shell & Environment
-From BASHRC_ENV_VAR_NAMES: list env var names defined (never print values — names only).
+From BASHRC_ENV_VAR_NAMES: list env var names defined (never print values - names only).
 From BASHRC_AUTOSTARTS: describe what each auto-started process does.
 Note any PATH extensions that look unusual.
 
@@ -36,7 +36,7 @@ Note any PATH extensions that look unusual.
 Use DEV_TREE and PROJECT_LANGS. Group repos by top-level org directory found in ~/dev.
 
 For each repo: name, detected runtime(s), whether a CF worker or docker-compose is present.
-For any project with no detected runtime, call it out — may be docs-only or non-standard structure.
+For any project with no detected runtime, call it out - may be docs-only or non-standard structure.
 
 ### AI Tooling Ecosystem
 From AI_CLIENTS and OLLAMA_MODELS:

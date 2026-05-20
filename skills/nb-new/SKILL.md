@@ -23,7 +23,7 @@ Creates a new notebook with a title cell and a placeholder body cell.
 1. Determine the path: ask the user if not given, or infer from context (e.g. "add a git guide" → `vibe-coding/git/how-to-git`)
 2. Run `NB_PATH="..." NB_TITLE="..." bash scripts/create.sh`
 3. Report the created path and tell the user to open it
-4. Do NOT add content — the notebook starts with a title and one placeholder cell. The user or a follow-up prompt fills it in.
+4. Do NOT add content - the notebook starts with a title and one placeholder cell. The user or a follow-up prompt fills it in.
 
 ## Naming convention
 

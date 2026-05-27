@@ -16,7 +16,7 @@ One command from idea to a push-ready local repo with all standard files.
 
 ### scripts/scaffold.sh
 Creates a GitHub repo and writes all standard files.
-- Input: `REPO_ORG=madebymadhouse|orinadus-systems|samhcharles`
+- Input: `REPO_ORG=madebymadhouse|orinadus-systems|samhcus`
 - Input: `REPO_NAME=<kebab-case-name>`
 - Input: `REPO_DESC=<one sentence>`
 - Input: `REPO_VISIBILITY=public|private` (default: public)
@@ -46,4 +46,4 @@ Creates a GitHub repo and writes all standard files.
 |-----|-----------|
 | madebymadhouse | ~/dev/mad-house/<name> |
 | orinadus-systems | ~/dev/orinadus/<name> |
-| samhcharles | ~/dev/personal/<name> |
+| samhcus | ~/dev/personal/<name> |

@@ -17,7 +17,7 @@ fi
 case "$REPO_ORG" in
   madebymadhouse)   LOCAL_PARENT="${HOME}/dev/mad-house" ;;
   orinadus-systems) LOCAL_PARENT="${HOME}/dev/orinadus" ;;
-  samhcharles)      LOCAL_PARENT="${HOME}/dev/personal" ;;
+  samhcus)      LOCAL_PARENT="${HOME}/dev/personal" ;;
   *) echo "{\"created\":false,\"error\":\"unknown org: $REPO_ORG\"}"; exit 1 ;;
 esac
 

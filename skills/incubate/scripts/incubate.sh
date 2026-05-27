@@ -8,7 +8,7 @@
 #   incubate new <name> [--type code|game|creative|tool|experiment|content] [--desc "..."]
 #   incubate list [--all]
 #   incubate stage <name> <concept|prototype|building|shipped|maintained|archived>
-#   incubate promote <name> [--org madebymadhouse|orinadus-systems|samhcharles] [--public]
+#   incubate promote <name> [--org madebymadhouse|orinadus-systems|samhcus] [--public]
 #   incubate ship <name>
 #   incubate archive <name> [--reason "..."]
 #   incubate info <name>
